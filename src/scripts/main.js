@@ -47,3 +47,21 @@ tableHead.addEventListener('click', ev => {
 function checkSalary(salary) {
     return +(salary.replace(/\D/g, ''));
 }
+
+// selected functional:
+
+
+
+tableBody.addEventListener('click', ev => {
+    
+    const rows = [...document.querySelectorAll('TR')];
+
+    rows.forEach(row => {
+        row.classList.remove('active');
+    })
+
+   if (ev.target.parentElement.tagName === 'TR') {
+    ev.target.parentElement.classList.add('active');
+   }
+
+})
