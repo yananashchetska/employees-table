@@ -14,11 +14,17 @@ const sortTable = (headerIndex, asc = true) => {
     const directionModifier = asc ? 1 : -1;
     
     const rows = [...table.rows].slice(1, -1);
-    
+    const reg = /\$/;
+
     rows.sort((rowA, rowB) => {
-        const valueA = rowA.cells[headerIndex].textContent.trim();
-        const valueB = rowB.cells[headerIndex].textContent.trim();
+        let valueA = rowA.cells[headerIndex].textContent.trim();
+        let valueB = rowB.cells[headerIndex].textContent.trim();
         
+        if (reg.test(valueA)) {
+            valueA = checkSalary(valueA);
+            valueB = checkSalary(valueB);
+        }
+
         return valueA > valueB ? (1 * directionModifier) : (-1 * directionModifier);
     });
     
@@ -37,3 +43,7 @@ tableHead.addEventListener('click', ev => {
         tableBody.appendChild(row);
     })  
 })
+
+function checkSalary(salary) {
+    return +(salary.replace(/\D/g, ''));
+}

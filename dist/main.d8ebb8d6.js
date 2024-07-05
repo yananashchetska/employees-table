@@ -135,9 +135,14 @@ var sortTable = function sortTable(headerIndex) {
   var asc = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var directionModifier = asc ? 1 : -1;
   var rows = _toConsumableArray(table.rows).slice(1, -1);
+  var reg = /\$/;
   rows.sort(function (rowA, rowB) {
     var valueA = rowA.cells[headerIndex].textContent.trim();
     var valueB = rowB.cells[headerIndex].textContent.trim();
+    if (reg.test(valueA)) {
+      valueA = checkSalary(valueA);
+      valueB = checkSalary(valueB);
+    }
     return valueA > valueB ? 1 * directionModifier : -1 * directionModifier;
   });
   return rows;
@@ -151,6 +156,9 @@ tableHead.addEventListener('click', function (ev) {
     tableBody.appendChild(row);
   });
 });
+function checkSalary(salary) {
+  return +salary.replace(/\D/g, '');
+}
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -176,7 +184,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50464" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51569" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
