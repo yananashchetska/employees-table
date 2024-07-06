@@ -50,11 +50,25 @@ function checkSalary(salary) {
 
 // selected functional:
 
-tableBody.addEventListener('click', ev => {
-    
+tableBody.addEventListener('click', ev => {    
     [...table.rows].forEach(row => {
         row.classList.remove('active')
     })
-
+    
+    
+    if (ev.target.tagName !== 'TD') {
+        
+        [...table.rows].forEach(row => {
+            row.classList.remove('active')
+        })
+    }
     ev.target.parentElement.classList.add('active');
+})
+
+document.addEventListener('click', ev => {
+    if (ev.target.parentElement.tagName !== 'TR') {
+        [...tableBody.rows].forEach(row => {
+            row.classList.remove('active');
+        })
+    }
 })

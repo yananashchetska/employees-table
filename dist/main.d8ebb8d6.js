@@ -166,7 +166,19 @@ tableBody.addEventListener('click', function (ev) {
   _toConsumableArray(table.rows).forEach(function (row) {
     row.classList.remove('active');
   });
+  if (ev.target.tagName !== 'TD') {
+    _toConsumableArray(table.rows).forEach(function (row) {
+      row.classList.remove('active');
+    });
+  }
   ev.target.parentElement.classList.add('active');
+});
+document.addEventListener('click', function (ev) {
+  if (ev.target.parentElement.tagName !== 'TR') {
+    _toConsumableArray(tableBody.rows).forEach(function (row) {
+      row.classList.remove('active');
+    });
+  }
 });
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -193,7 +205,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57232" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54604" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
