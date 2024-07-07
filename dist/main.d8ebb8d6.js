@@ -180,6 +180,97 @@ document.addEventListener('click', function (ev) {
     });
   }
 });
+
+// adding form:
+
+// TODO: add a function to wrap inputs via labels;
+
+var form = document.createElement('form');
+form.classList.add('new-employee-form');
+var nameField = document.createElement('input');
+var positionField = document.createElement('input');
+var ageInput = document.createElement('input');
+var salaryInput = document.createElement('input');
+var select = document.createElement('select');
+var submitButton = document.createElement('button');
+
+// form.appendChild(nameField, positionField, ageInput, select,
+//     ageInput, salaryInput, submitButton
+// )
+var body = document.body;
+body.append(form);
+function wrapField(form, input, labelText) {
+  var label = document.createElement('label');
+  input.classList.add('cell-input');
+  input.dataset.qa = "".concat(labelText.toLowerCase());
+  label.textContent = "".concat(labelText);
+  if (labelText.toLowerCase() === 'age' || labelText.toLowerCase() === 'salary') {
+    input.type = 'number';
+  }
+  label.appendChild(input);
+  form.appendChild(label);
+}
+wrapField(form, nameField, 'Name');
+wrapField(form, positionField, 'Position');
+wrapField(form, select, 'Office');
+wrapField(form, ageInput, 'Age');
+wrapField(form, salaryInput, 'Salary');
+form.appendChild(submitButton);
+submitButton.textContent = 'Save to table';
+function insertOption(selectionField, optionText) {
+  var option = document.createElement('option');
+  option.textContent = "".concat(optionText);
+  selectionField.appendChild(option);
+}
+insertOption(select, 'Tokyo');
+insertOption(select, 'Singapore');
+insertOption(select, 'London');
+insertOption(select, 'New York');
+insertOption(select, 'Edinburgh');
+insertOption(select, 'San Francisco');
+
+// function getFormInfo(form) {
+//     // const employeeInfo = [];
+
+//     const formElements = form.elements;
+
+//     console.log(formElements);
+// } 
+
+// getFormInfo(form);
+
+submitButton.addEventListener('click', function (ev) {
+  ev.preventDefault();
+  var formElements = _toConsumableArray(form.elements).slice(0, -1);
+  var values = [];
+  formElements.forEach(function (element) {
+    if (!element.value) {
+      // console.log(`${element.dataset.qa} is empty!`);
+      // TODO: add notifocation
+    } else {
+      values.push(element.value);
+    }
+  });
+
+  // console.log(values);
+  insertRow(values);
+  form.reset();
+});
+function insertRow(valuesArray) {
+  var row = tableBody.insertRow();
+  valuesArray.forEach(function (value) {
+    var cell = row.insertCell();
+    if (!isNaN(value) && value.length > 3) {
+      cell.textContent = formatSalary(value);
+    } else {
+      cell.textContent = value;
+    }
+  });
+}
+function formatSalary(salaryNumber) {
+  var formattedNumber = Number(salaryNumber).toLocaleString('en-US');
+  return "$".concat(formattedNumber);
+}
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -205,7 +296,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54604" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61587" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
