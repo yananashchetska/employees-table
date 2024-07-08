@@ -4,7 +4,7 @@ const table = document.querySelector('table');
 
 const tableHead = table.querySelector('THEAD');
 const tableBody = table.querySelector('TBODY');
-
+const notifications = [];
 
 let index = 0;
 let asc = false;
@@ -87,10 +87,6 @@ const salaryInput = document.createElement('input');
 
 const select = document.createElement('select');
 const submitButton = document.createElement('button');
-
-// form.appendChild(nameField, positionField, ageInput, select,
-//     ageInput, salaryInput, submitButton
-// )
 const body = document.body;
 
 body.append(form);
@@ -134,16 +130,6 @@ insertOption(select, 'New York');
 insertOption(select, 'Edinburgh');
 insertOption(select, 'San Francisco');
 
-// function getFormInfo(form) {
-//     // const employeeInfo = [];
-
-//     const formElements = form.elements;
-
-//     console.log(formElements);
-// } 
-
-// getFormInfo(form);
-
 submitButton.addEventListener('click', ev => {
     ev.preventDefault();
 
@@ -151,17 +137,26 @@ submitButton.addEventListener('click', ev => {
     const values = [];
 
     formElements.forEach(element => {
-
-        if (!element.value) {
-            // console.log(`${element.dataset.qa} is empty!`);
-            // TODO: add notifocation
+        
+        if (element.dataset.qa === 'name'
+            && element.value.length < 4) {
+            notify('error', 'Name should be longer than 4 digits!');
+            return;
+        } else if (element.dataset.qa === 'age'
+            && !isAgeValid(element)) {
+            notify('error', 'You should be 18 - 90 years old!');
+            return;
         } else {
             values.push(element.value);
         }
+        
     })
     
-    // console.log(values);
-    insertRow(values);
+    if (values.length === 5) {
+        insertRow(values);
+        notify('succes', 'Your info was succesfully added to the table!')
+    }
+
     form.reset();
 });
 
@@ -184,4 +179,40 @@ function insertRow(valuesArray) {
 function formatSalary(salaryNumber) {
     const formattedNumber = Number(salaryNumber).toLocaleString('en-US');
     return `$${formattedNumber}`;
+}
+
+function notify(result, message) {
+    const notification = document.createElement('div');
+
+    notification.dataset.qa = 'notification';
+    notification.classList.add('notification');
+    notification.classList.add(`${result}`);
+    
+    const title = document.createElement('h2');
+    title.classList.add('title');
+    title.textContent = `${(result.charAt(0).toUpperCase() + result.slice(1))}`;
+
+    const description = document.createElement('p');
+    description.textContent = `${message}`;
+
+    notification.appendChild(title);
+    notification.appendChild(description);
+
+    body.appendChild(notification);
+    notifications.push(notification);
+
+    notifications.forEach((notif, index) => {
+        notif.style.top = `${10 + index * 110}px`;
+    });
+
+    setTimeout(() => {
+        notification.remove(),
+        notifications.shift()
+    }, 3000);
+}
+
+function isAgeValid(element) {
+    const age = +element.value;
+
+    return age < 18 ? false : age > 90 ? false : true;
 }

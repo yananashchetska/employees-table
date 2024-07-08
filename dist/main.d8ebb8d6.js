@@ -129,6 +129,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 var table = document.querySelector('table');
 var tableHead = table.querySelector('THEAD');
 var tableBody = table.querySelector('TBODY');
+var notifications = [];
 var index = 0;
 var asc = false;
 var sortTable = function sortTable(headerIndex) {
@@ -193,10 +194,6 @@ var ageInput = document.createElement('input');
 var salaryInput = document.createElement('input');
 var select = document.createElement('select');
 var submitButton = document.createElement('button');
-
-// form.appendChild(nameField, positionField, ageInput, select,
-//     ageInput, salaryInput, submitButton
-// )
 var body = document.body;
 body.append(form);
 function wrapField(form, input, labelText) {
@@ -228,32 +225,25 @@ insertOption(select, 'London');
 insertOption(select, 'New York');
 insertOption(select, 'Edinburgh');
 insertOption(select, 'San Francisco');
-
-// function getFormInfo(form) {
-//     // const employeeInfo = [];
-
-//     const formElements = form.elements;
-
-//     console.log(formElements);
-// } 
-
-// getFormInfo(form);
-
 submitButton.addEventListener('click', function (ev) {
   ev.preventDefault();
   var formElements = _toConsumableArray(form.elements).slice(0, -1);
   var values = [];
   formElements.forEach(function (element) {
-    if (!element.value) {
-      // console.log(`${element.dataset.qa} is empty!`);
-      // TODO: add notifocation
+    if (element.dataset.qa === 'name' && element.value.length < 4) {
+      notify('error', 'Name should be longer than 4 digits!');
+      return;
+    } else if (element.dataset.qa === 'age' && !isAgeValid(element)) {
+      notify('error', 'You should be 18 - 90 years old!');
+      return;
     } else {
       values.push(element.value);
     }
   });
-
-  // console.log(values);
-  insertRow(values);
+  if (values.length === 5) {
+    insertRow(values);
+    notify('succes', 'Your info was succesfully added to the table!');
+  }
   form.reset();
 });
 function insertRow(valuesArray) {
@@ -270,6 +260,31 @@ function insertRow(valuesArray) {
 function formatSalary(salaryNumber) {
   var formattedNumber = Number(salaryNumber).toLocaleString('en-US');
   return "$".concat(formattedNumber);
+}
+function notify(result, message) {
+  var notification = document.createElement('div');
+  notification.dataset.qa = 'notification';
+  notification.classList.add('notification');
+  notification.classList.add("".concat(result));
+  var title = document.createElement('h2');
+  title.classList.add('title');
+  title.textContent = "".concat(result.charAt(0).toUpperCase() + result.slice(1));
+  var description = document.createElement('p');
+  description.textContent = "".concat(message);
+  notification.appendChild(title);
+  notification.appendChild(description);
+  body.appendChild(notification);
+  notifications.push(notification);
+  notifications.forEach(function (notif, index) {
+    notif.style.top = "".concat(10 + index * 110, "px");
+  });
+  setTimeout(function () {
+    notification.remove(), notifications.shift();
+  }, 3000);
+}
+function isAgeValid(element) {
+  var age = +element.value;
+  return age < 18 ? false : age > 90 ? false : true;
 }
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -296,7 +311,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61587" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49267" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
