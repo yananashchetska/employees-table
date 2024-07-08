@@ -184,8 +184,6 @@ document.addEventListener('click', function (ev) {
 
 // adding form:
 
-// TODO: add a function to wrap inputs via labels;
-
 var form = document.createElement('form');
 form.classList.add('new-employee-form');
 var nameField = document.createElement('input');
@@ -230,7 +228,6 @@ submitButton.addEventListener('click', function (ev) {
   var formElements = _toConsumableArray(form.elements).slice(0, -1);
   var values = [];
   formElements.forEach(function (element) {
-    console.dir(element);
     if (element.value === '') {
       notify('error', "You should fill your ".concat(element.dataset.qa, " first!"));
     } else if (element.dataset.qa === 'name' && element.value.length < 4) {
@@ -314,7 +311,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63109" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51344" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

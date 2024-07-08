@@ -75,8 +75,6 @@ document.addEventListener('click', ev => {
 
 // adding form:
 
-// TODO: add a function to wrap inputs via labels;
-
 const form = document.createElement('form');
 form.classList.add('new-employee-form');
 
@@ -137,7 +135,7 @@ submitButton.addEventListener('click', ev => {
     const values = [];
 
     formElements.forEach(element => {
-        console.dir(element);
+
         if(element.value === '') {
             notify('error', `You should fill your ${element.dataset.qa} first!`);
         }  else if (element.dataset.qa === 'name'
@@ -218,3 +216,5 @@ function isAgeValid(element) {
 
     return age < 18 ? false : age > 90 ? false : true;
 }
+
+
