@@ -230,7 +230,10 @@ submitButton.addEventListener('click', function (ev) {
   var formElements = _toConsumableArray(form.elements).slice(0, -1);
   var values = [];
   formElements.forEach(function (element) {
-    if (element.dataset.qa === 'name' && element.value.length < 4) {
+    console.dir(element);
+    if (element.value === '') {
+      notify('error', "You should fill your ".concat(element.dataset.qa, " first!"));
+    } else if (element.dataset.qa === 'name' && element.value.length < 4) {
       notify('error', 'Name should be longer than 4 digits!');
       return;
     } else if (element.dataset.qa === 'age' && !isAgeValid(element)) {
@@ -311,7 +314,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49267" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63109" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

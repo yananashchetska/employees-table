@@ -137,8 +137,10 @@ submitButton.addEventListener('click', ev => {
     const values = [];
 
     formElements.forEach(element => {
-        
-        if (element.dataset.qa === 'name'
+        console.dir(element);
+        if(element.value === '') {
+            notify('error', `You should fill your ${element.dataset.qa} first!`);
+        }  else if (element.dataset.qa === 'name'
             && element.value.length < 4) {
             notify('error', 'Name should be longer than 4 digits!');
             return;
