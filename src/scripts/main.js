@@ -155,9 +155,9 @@ submitButton.addEventListener('click', ev => {
     if (values.length === 5) {
         insertRow(values);
         notify('succes', 'Your info was succesfully added to the table!')
+        form.reset();
     }
 
-    form.reset();
 });
 
 function insertRow(valuesArray) {

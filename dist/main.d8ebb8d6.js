@@ -243,8 +243,8 @@ submitButton.addEventListener('click', function (ev) {
   if (values.length === 5) {
     insertRow(values);
     notify('succes', 'Your info was succesfully added to the table!');
+    form.reset();
   }
-  form.reset();
 });
 function insertRow(valuesArray) {
   var row = tableBody.insertRow();
@@ -311,7 +311,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51344" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60880" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
